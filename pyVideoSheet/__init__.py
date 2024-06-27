@@ -18,6 +18,9 @@ class Video:
         self.thumbsize = self.resolution
         self.thumbcount = 0
 
+        self.start = 0
+        self.end = self.duration
+
     def getFileSize(self):
         return os.stat(self.filename).st_size / 1048576.0
 
@@ -44,9 +47,9 @@ class Video:
         return img
 
     def makeThumbnails(self, interval):
-        totalThumbs = self.duration // interval
+        totalThumbs = (self.end-self.start) // interval
         thumbsList = []
-        seektime = 0
+        seektime = self.start
         for n in range(0, int(totalThumbs)):
             seektime += interval
             img = self.getFrameAt(seektime)
@@ -70,6 +73,14 @@ class Video:
         seconds = int(seconds % 60)
         timestring = f"{hours}:{minutes}:{seconds}"
         return timestring
+
+
+    def setStartTime(self, seconds):
+        self.start = min(max(0, seconds), self.end)
+
+
+    def setEndTime(self, seconds):
+        self.end = max(min(self.duration, seconds), self.start)
 
 
 class Sheet:
@@ -112,7 +123,7 @@ class Sheet:
         height = self.video.thumbsize[1]
         grid = Image.new(self.video.mode, (width * column, height * row))
         d = ImageDraw.Draw(grid)
-        seektime = 0
+        seektime = self.video.start
         for j in range(0, row):
             for i in range(0, column):
                 if j * column + i >= self.video.thumbcount:
@@ -156,6 +167,6 @@ class Sheet:
         return self.sheet
 
     def makeSheetByNumber(self, numOfThumbs):
-        interval = (self.video.duration / numOfThumbs)
+        interval = ((self.video.end - self.video.start) / numOfThumbs)
         self.vid_interval = interval
         return self.makeSheetByInterval(interval)
