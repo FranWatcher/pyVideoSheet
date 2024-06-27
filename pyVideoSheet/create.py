@@ -15,8 +15,8 @@ if __name__ == "__main__":
     parser.add_argument('--bgcolour',nargs=4,type=int,default=None, metavar=('<r>','<g>','<b>','<a>'), help='Specify background colour of contact sheet. Colour is specify in RGBA format.')
     parser.add_argument('--font',nargs=2,default=None, metavar=('<fontfile>','<size>'), help='Specify font of description. Any truetype font are supported.')
     parser.add_argument('--preview', action='count', help='Preview the result contact sheet.')
-    parser.add_argument('--start', '-s', type=int, default=None, metavar='<sec>',help='Specify, in seconds, at what point in the video thumbnails begin to be creates')
-    parser.add_argument('--end', '-e', type=int, default=None, metavar='<sec>',help='Specify, in seconds, at what point in the video thumbnails end to be creates')
+    parser.add_argument('--start', '-s', type=int, default=None, metavar='<sec>',help='Specify, in seconds, at what point in the video thumbnails begin to be created')
+    parser.add_argument('--end', '-e', type=int, default=None, metavar='<sec>',help='Specify, in seconds, at what point in the video thumbnails end to be created')
     args = parser.parse_args()
 
     video = Video(args.filename)
