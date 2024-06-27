@@ -10,7 +10,7 @@ pyVideoSheet can be used as a standalong command-line application and as an impo
 
 pyVideoSheet requires the following softwares and packages to work:
 
-* Python (Of course! pyVideoSheet is written in Python 2.7 though)
+* Python3.10+
 * Python Image Library (PIL) 
 * FFmpeg
 
@@ -49,15 +49,16 @@ If you can see FFmpeg's help, it should work alright. Otherwise please check how
    This can be done by either using git:
    
    ```
-   git clone https://github.com/rorasa/pyVideoSheet.git
+   https://github.com/FranWatcher/pyVideoSheet.git
    ```
    
-   or by downloading the zip archive https://github.com/rorasa/pyVideoSheet/archive/master.zip and extract it.
-2. Go into the downloaded directory
+   or by downloading the zip archive https://github.com/FranWatcher/pyVideoSheet/archive/refs/heads/master.zip and extract it.
+   
+3. Go into the downloaded directory
    ```
    cd pyVideoSheet-<version>
    ```
-3. Install the package
+4. Install the package
    ```
    python setup.py install
    ```
@@ -94,6 +95,8 @@ Options | Example | Description
 --bgcolour | --bgcolour 255 255 0 0 | Specify description's text colour in RGBA format.
 --font | --font font-file.ttf 12 | Specify description's font and font size. Support any TrueType font.
 --preview | --preview | Preview the contact sheet on default image viewer.
+-s, --start | -s 50 | Specify, in seconds, at what point in the video thumbnails begin to be created
+-e, --end | -e 700 | Specify, in seconds, at what point in the video thumbnails end to be created
 
 ## Using pyVideoSheet as a package
 
@@ -191,6 +194,16 @@ Reduce the resolution of Video.thumbnails.
 - **Parameter**: **maxSize**—a tuple of (maxWidth, maxHeight).
 - **Return**: Video.thumbnails.
 
+**setStartTime(*start*)**
+
+Specify, in seconds, at what point in the video the thumbnails begin to be created
+- **Parameter**: **start**-number of seconds
+
+**setEndTime(*end*)**
+
+Specify, in seconds, at what point in the video the thumbnails end to be created
+- **Parameter**: **end**-number of seconds
+
 ### Sheet class
 
 Sheet class handles the creation of contact sheet.
@@ -246,11 +259,21 @@ Most image formats (including JPEG and PNG) should also work as an output format
 ### License
 pyVideoSheet source, including this document, is distributed under Mozilla Public License 2.0. Please refer to LICENSE file for information.
 
-### Developer
+### Developers
 pyVideoSheet is created and maintained by [Wattanit Hotrakool](https://github.com/rorasa).
 You can reach the developer directly through [twitter](https://www.twitter.com/rorasa).
 
+Updated to make it compatible with Python 3.10 by [Eduard](https://github.com/eduard93)
+
+Updates to allow to specipy start and end times in the video by [FranWatcher](https://github.com/FranWatcher) 
+
 ### Development log
+
+27 June 2024
+- @FranWatcher allow to specify start and end time in the video
+
+29 March 2023
+- @eduard93 update to Python 3.10
 
 30 October 2015
 - Converted into a python package with setup script.
