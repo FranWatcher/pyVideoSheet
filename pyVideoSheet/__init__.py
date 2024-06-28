@@ -6,6 +6,7 @@ import os
 from decimal import Decimal
 
 
+
 class Video:
     def __init__(self, filename):
         self.filename = filename
@@ -33,7 +34,7 @@ class Video:
         minutes = Decimal(matches['minutes'])
         seconds = Decimal(matches['seconds'])
         duration = 3600 * hours + 60 * minutes + seconds
-        return duration
+        return int(duration)
 
     def getFrameAt(self, seektime):
         timestring = self.getTimeString(seektime)
@@ -47,14 +48,15 @@ class Video:
         return img
 
     def makeThumbnails(self, interval):
-        totalThumbs = (self.end-self.start) // interval
+        totalThumbs = ((self.end-self.start) // interval) + 1
         thumbsList = []
         seektime = self.start
         for n in range(0, int(totalThumbs)):
-            seektime += interval
             img = self.getFrameAt(seektime)
             if img != None:
                 thumbsList.append(img)
+            seektime += interval
+
         self.thumbnails = thumbsList
         self.thumbcount = len(thumbsList)
         return thumbsList
@@ -130,9 +132,9 @@ class Sheet:
                     break
                 grid.paste(self.video.thumbnails[j * column + i], (width * i, height * j))
                 if self.timestamp == True:
-                    seektime += self.vid_interval
                     ts = self.video.getTimeString(seektime)
                     d.text((width * i, height * j), ts, font=self.font, fill=self.textColour)
+                    seektime += self.vid_interval
         self.grid = grid
         return grid
 
@@ -167,6 +169,6 @@ class Sheet:
         return self.sheet
 
     def makeSheetByNumber(self, numOfThumbs):
-        interval = ((self.video.end - self.video.start) / numOfThumbs)
+        interval = ((self.video.end - self.video.start) / (numOfThumbs-1))
         self.vid_interval = interval
         return self.makeSheetByInterval(interval)
